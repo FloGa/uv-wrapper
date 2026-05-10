@@ -69,7 +69,7 @@ In short: Copy, paste, and use it however you like.
 
 - OS:
     - Linux (`unknown-linux-gnu`)
-    - Windows-like shell environments (`MINGW`, `MSYS`, `CYGWIN`, `Windows_NT`)
+    - Windows (requires a bash shell eg. `Git-Bash`, `MINGW`, `MSYS`, `CYGWIN`)
 - Architecture:
     - `x86_64`
     - `aarch64`
