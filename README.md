@@ -32,6 +32,21 @@ In short: Copy, paste, and use it however you like.
 - Pin the `uv` version in source control via `.uv-version`.
 - Handle concurrent first-run installs safely with a lock.
 
+## About the Programming Language
+
+The wrapper is written as a Bash script, so you need Bash to execute it.
+
+On Linux this should not be a problem, since Bash is pre-installed on many distributions. If you face problems with
+different Shells like Zsh or Dash, please open an issue, so we can try to rewrite the wrapper into a more POSIX-Shell
+compliant format.
+
+On Windows, you can use the Git-Bash to execute the script, which is included in the "Git-for-Windows" installer. Or you
+can use a dedicated environment like WSL or MSYS2 to run Bash. Be extra careful when you download the wrapper or copy
+and paste the content into a new file. Windows editors or shells like the PowerShell on Windows tend to create files
+with `UTF-16` encoding and use `CRLF` line endings. This can render the file unusable by Bash, with errors like:
+`bash: ./uv: cannot execute binary file: Exec format error`. Please make sure the wrapper script uses `UTF-8` encoding
+and `LF` line endings.
+
 ## Quick Start
 
 1.  Copy or download the wrapper to your project:
@@ -68,8 +83,9 @@ In short: Copy, paste, and use it however you like.
 ## Requirements
 
 - OS:
-    - Linux (`unknown-linux-gnu`)
-    - Windows (requires a bash shell eg. `Git-Bash`, `MINGW`, `MSYS`, `CYGWIN`)
+    - Linux
+    - Windows (requires a Bash executable like the `Git-Bash`,
+      see ["About the Programming Language"](#about-the-programming-language)
 - Architecture:
     - `x86_64`
     - `aarch64`
@@ -126,6 +142,11 @@ wrapper.
       recommendation is, stick to one operating system and avoid switching back and forth. If you absolutely need to,
       make sure to remove the `./.uv` directory and maybe even the virtual Python environment in `./.venv` to ensure a
       clean state when `./uv` is run the next time.
+- When executing `./uv`, I get an error message like: `bash: ./uv: cannot execute binary file: Exec format error`
+    - This is most likely caused by a wrong file encoding and/or line endings. See
+      the ["About the Programming Language"](#about-the-programming-language) section for more information.
+    - In short: Make sure the `uv` wrapper script uses `UTF-8` encoding and `LF` line endings, so it can be executed in
+      Bash.
 
 ## FAQ
 
