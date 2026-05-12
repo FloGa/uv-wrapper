@@ -271,6 +271,9 @@ release_install_lock() {
 acquire_install_lock() {
   mkdir -p "$UV_PATH"
 
+  # Automatically ignore this directory.
+  echo "*" >"$UV_PATH/.gitignore"
+
   local incomplete_lock_detected=
   while ! create_install_lock; do
     # If the other process has already finished, we don't need to wait any
