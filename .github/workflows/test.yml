@@ -25,8 +25,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Test
+      - name: Test Bash script
         shell: bash
         run: |
           rm -rf .uv .uv-version
           ./uv --version
+
+      - name: Test DosBatch script
+        shell: cmd
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          rd .uv /q /s
+          rd .uv-version /q /s
+          .\uv.bat --version
