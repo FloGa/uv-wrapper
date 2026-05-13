@@ -46,9 +46,11 @@ if defined git_path (
         "!bash_path!" "%~dp0%~n0" %*
     ) else (
         echo bash executable was not found in directory: !git_dir!
+        exit /b 1
     )
 ) else (
     echo git executable was not found.
+    exit /b 1
 )
 
 endlocal
