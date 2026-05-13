@@ -36,5 +36,5 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           rd .uv /q /s
-          rd .uv-version /q /s
+          del /q .uv-version
           .\uv.bat --version
