@@ -47,6 +47,21 @@ with `UTF-16` encoding and use `CRLF` line endings. This can render the file unu
 `bash: ./uv: cannot execute binary file: Exec format error`. Please make sure the wrapper script uses `UTF-8` encoding
 and `LF` line endings.
 
+To make life easier for Windows users, a DosBatch file is also provided, so to speak, as a wrapper for the actual
+wrapper Bash script.
+
+This `uv.bat` does not actually do anything itself:
+
+-   It searches all `git` executables available in the PATH.
+-   It looks for a `bash.exe` in the same directory as `git.exe` (or more correctly, it goes up a directory and from
+    there looks for `bin\bash.exe`; this is neede because Git can be installed in different locations, but `bash.exe`
+    usually resides in the `bin` subfolder).
+-   If `bash.exe` is found, call it with `.\uv` and the rest of the command line arguments.
+
+So, the real logic is still in the Bash script; the DosBatch script merely looks for a way to execute the Bash script.
+That means, if you want to use the DosBatch file, you still need to have the Bash script alongside it, and you need
+Git-Bash installed.
+
 ## Quick Start
 
 1.  Copy or download the wrapper to your project:
@@ -54,6 +69,8 @@ and `LF` line endings.
     ```bash
     cd your/project
     curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv >uv
+    # If you also want to call uv via a bat file, download the bat-to-bash wrapper:
+    curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv.bat >uv.bat
     ```
 
 2.  Make sure the wrapper is executable:
@@ -68,6 +85,15 @@ and `LF` line endings.
     ./uv --version
     ./uv sync
     ./uv run python -V
+    ```
+
+    If you prefer a DosBatch file on Windows, you can instead use the following in a CMD or PowerShell
+    (see ["About the Programming Language"](#about-the-programming-language)):
+
+    ```batchfile
+    .\uv.bat --version
+    .\uv.bat sync
+    .\uv.bat run python -V
     ```
 
     On first run, the wrapper downloads and verifies the configured `uv` release. If no `.uv-version` file is present,
