@@ -20,14 +20,10 @@ rem necessary. No attribution or license text is required.
 rem Required for !-syntax.
 setlocal enabledelayedexpansion
 
-rem Find the path to the git executable.
+rem Try all Git executables in the PATH.
 for /f "delims=" %%i in ('where git') do (
-    rem Store the path of the first found git executable.
     set git_path=%%i
-)
 
-rem If git was found
-if defined git_path (
     rem Extract the directory of git.
     for %%j in ("!git_path!") do (
         set git_dir=%%~dpj
@@ -44,13 +40,19 @@ if defined git_path (
         rem rest of the arguments. The path of the Bash script is determined
         rem by the path of this script, without the file extension.
         "!bash_path!" "%~dp0%~n0" %*
-    ) else (
-        echo bash executable was not found in directory: !git_dir!
-        exit /b 1
+        exit /b
     )
-) else (
-    echo git executable was not found.
-    exit /b 1
 )
+
+rem Bash was not found, but was Git found at least?
+if defined git_path (
+    echo Bash executable was not found in any Git install directory.>&2
+) else (
+    echo Git executable was not found.>&2
+)
+
+rem If this point has been reached, Bash could not be found, so exit with an
+rem error status.
+exit /b 1
 
 endlocal
