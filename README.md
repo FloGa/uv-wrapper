@@ -187,8 +187,8 @@ wrapper.
 
 2.  Do I need to check the `.uv` directory into version control?
 
-    No, absolutely not! The wrapper will automatically download and run the `uv` binary if it is not present. It is best
-    to put the `/.uv/` directory into `.gitignore`.
+    No, absolutely not! The wrapper will automatically download and run the `uv` binary if it is not present. The
+    wrapper automatically creates a `.gitignore` in the `.uv` directory to make Git ignore this whole directory.
 
 3.  Do I need to check the `.uv-version` file into version control?
 
