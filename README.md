@@ -47,6 +47,21 @@ with `UTF-16` encoding and use `CRLF` line endings. This can render the file unu
 `bash: ./uv: cannot execute binary file: Exec format error`. Please make sure the wrapper script uses `UTF-8` encoding
 and `LF` line endings.
 
+To make life easier for Windows users, a DosBatch file is also provided, so to speak, as a wrapper for the actual
+wrapper Bash script.
+
+This `uv.bat` does not actually do anything itself:
+
+-   It searches all `git` executables available in the PATH.
+-   It looks for a `bash.exe` in the same directory as `git.exe` (or more correctly, it goes up a directory and from
+    there looks for `bin\bash.exe`; this is neede because Git can be installed in different locations, but `bash.exe`
+    usually resides in the `bin` subfolder).
+-   If `bash.exe` is found, call it with `.\uv` and the rest of the command line arguments.
+
+So, the real logic is still in the Bash script; the DosBatch script merely looks for a way to execute the Bash script.
+That means, if you want to use the DosBatch file, you still need to have the Bash script alongside it, and you need
+Git-Bash installed.
+
 ## Quick Start
 
 1.  Copy or download the wrapper to your project:
@@ -54,6 +69,8 @@ and `LF` line endings.
     ```bash
     cd your/project
     curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv >uv
+    # If you also want to call uv via a bat file, download the bat-to-bash wrapper:
+    curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv.bat >uv.bat
     ```
 
 2.  Make sure the wrapper is executable:
@@ -70,6 +87,15 @@ and `LF` line endings.
     ./uv run python -V
     ```
 
+    If you prefer a DosBatch file on Windows, you can instead use the following in a CMD or PowerShell
+    (see ["About the Programming Language"](#about-the-programming-language)):
+
+    ```batchfile
+    .\uv.bat --version
+    .\uv.bat sync
+    .\uv.bat run python -V
+    ```
+
     On first run, the wrapper downloads and verifies the configured `uv` release. If no `.uv-version` file is present,
     the wrapper will download the latest release from GitHub and create a `.uv-version` file with the pinned version.
 
@@ -82,19 +108,19 @@ and `LF` line endings.
 
 ## Requirements
 
-- OS:
-    - Linux
-    - Windows (requires a Bash executable like the `Git-Bash`,
-      see ["About the Programming Language"](#about-the-programming-language)
-- Architecture:
-    - `x86_64`
-    - `aarch64`
-- Tools available in `PATH`:
-    - `curl`
-    - `sha256sum`
-    - plus archive tools:
-        - Linux: `tar`, `gunzip`
-        - Windows: `unzip`
+-   OS:
+    -   Linux
+    -   Windows (requires a Bash executable like the `Git-Bash`,
+        see ["About the Programming Language"](#about-the-programming-language)
+-   Architecture:
+    -   `x86_64`
+    -   `aarch64`
+-   Tools available in `PATH`:
+    -   `curl`
+    -   `sha256sum`
+    -   plus archive tools:
+        -   Linux: `tar`, `gunzip`
+        -   Windows: `unzip`
 
 ## Version Management
 
@@ -107,13 +133,13 @@ wrapper.
 
 ## How It Works
 
-1. Detect OS and architecture.
-2. Validate required tools are installed.
-3. Acquire an install lock at `./.uv/.install.lock`.
-4. Download release archive and `.sha256` from GitHub.
-5. Verify checksum.
-6. Unpack and place the binary in `./.uv/bin`.
-7. Execute:
+1.  Detect OS and architecture.
+2.  Validate required tools are installed.
+3.  Acquire an install lock at `./.uv/.install.lock`.
+4.  Download release archive and `.sha256` from GitHub.
+5.  Verify checksum.
+6.  Unpack and place the binary in `./.uv/bin`.
+7.  Execute:
 
     ```bash
     ./.uv/bin/uv --project "<repo-dir>" <args>
@@ -127,26 +153,26 @@ wrapper.
 
 ## Troubleshooting
 
-- `Unsupported architecture` / `Unsupported operating system`
-    - The current wrapper only supports the OS/arch combinations listed above. For other combinations, please open an
-      issue or PR.
-- Missing required command (`curl`, `sha256sum`, etc.)
-    - Install the missing programs and rerun `./uv`.
-- Stale lock detected
-    - The script automatically removes stale lock files if the recorded PID is no longer running.
-- Version mismatch or corrupted install
-    - Remove `./.uv` and rerun `./uv`.
-    - This might happen under certain circumstances, like when you are working with your repository in different
-      "operating systems" in parallel – for example, you use your repository in Windows and via WSL. Since WSL (Linux)
-      needs a different binary than Windows, the wrapper will be confused and might not work as expected. My
-      recommendation is, stick to one operating system and avoid switching back and forth. If you absolutely need to,
-      make sure to remove the `./.uv` directory and maybe even the virtual Python environment in `./.venv` to ensure a
-      clean state when `./uv` is run the next time.
-- When executing `./uv`, I get an error message like: `bash: ./uv: cannot execute binary file: Exec format error`
-    - This is most likely caused by a wrong file encoding and/or line endings. See
-      the ["About the Programming Language"](#about-the-programming-language) section for more information.
-    - In short: Make sure the `uv` wrapper script uses `UTF-8` encoding and `LF` line endings, so it can be executed in
-      Bash.
+-   `Unsupported architecture` / `Unsupported operating system`
+    -   The current wrapper only supports the OS/arch combinations listed above. For other combinations, please open an
+        issue or PR.
+-   Missing required command (`curl`, `sha256sum`, etc.)
+    -   Install the missing programs and rerun `./uv`.
+-   Stale lock detected
+    -   The script automatically removes stale lock files if the recorded PID is no longer running.
+-   Version mismatch or corrupted install
+    -   Remove `./.uv` and rerun `./uv`.
+    -   This might happen under certain circumstances, like when you are working with your repository in different "
+        operating systems" in parallel – for example, you use your repository in Windows and via WSL. Since WSL (Linux)
+        needs a different binary than Windows, the wrapper will be confused and might not work as expected. My
+        recommendation is, stick to one operating system and avoid switching back and forth. If you absolutely need to,
+        make sure to remove the `./.uv` directory and maybe even the virtual Python environment in `./.venv` to ensure a
+        clean state when `./uv` is run the next time.
+-   When executing `./uv`, I get an error message like: `bash: ./uv: cannot execute binary file: Exec format error`
+    -   This is most likely caused by a wrong file encoding and/or line endings. See
+        the ["About the Programming Language"](#about-the-programming-language) section for more information.
+    -   In short: Make sure the `uv` wrapper script uses `UTF-8` encoding and `LF` line endings, so it can be executed
+        in Bash.
 
 ## FAQ
 
