@@ -66,20 +66,35 @@ Git-Bash installed.
 
 1.  Copy or download the wrapper to your project:
 
+    Linux/macOS:
     ```bash
     cd your/project
     curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv >uv
-    # If you also want to call uv via a bat file, download the bat-to-bash wrapper:
+    # If you also want to call uv via a bat file (eg. if working in a team with other developers on Windows), download the bat-to-bash wrapper:
     curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv.bat >uv.bat
     ```
 
-2.  Make sure the wrapper is executable:
+    Windows:
+    ```ps1
+    cd your/project
+    Invoke-WebRequest https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv -OutFile uv
+    Invoke-WebRequest https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv.bat -OutFile uv.bat
+    ```
+    
 
+3.  Make sure the wrapper is executable:
+
+    Linux/macOS:
     ```bash
     chmod +x ./uv
     ```
 
-3.  Run `uv` commands through the wrapper:
+    Windows:
+    ```bash
+    git update-index --chmod=+x ./uv
+    ```
+
+4.  Run `uv` commands through the wrapper:
 
     ```bash
     ./uv --version
@@ -99,7 +114,7 @@ Git-Bash installed.
     On first run, the wrapper downloads and verifies the configured `uv` release. If no `.uv-version` file is present,
     the wrapper will download the latest release from GitHub and create a `.uv-version` file with the pinned version.
 
-4.  Check `.uv-version` and `uv` into source control, for example, Git:
+5.  Check `.uv-version` and `uv` into source control, for example, Git:
 
     ```bash
     git add .uv-version uv
