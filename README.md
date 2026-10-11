@@ -66,17 +66,35 @@ Git-Bash installed.
 
 1.  Copy or download the wrapper to your project:
 
+    Bash:
+
     ```bash
     cd your/project
     curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv >uv
-    # If you also want to call uv via a bat file, download the bat-to-bash wrapper:
+    # If you also want to call uv via a bat file (eg. if working in a team with other developers on Windows), download the bat-to-bash wrapper:
     curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv.bat >uv.bat
+    ```
+
+    PowerShell:
+
+    ```powershell
+    cd your/project
+    Invoke-WebRequest https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv -OutFile uv
+    Invoke-WebRequest https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv.bat -OutFile uv.bat
     ```
 
 2.  Make sure the wrapper is executable:
 
+    Bash:
+
     ```bash
     chmod +x ./uv
+    ```
+
+    PowerShell:
+
+    ```powershell
+    git update-index --chmod=+x ./uv
     ```
 
 3.  Run `uv` commands through the wrapper:
