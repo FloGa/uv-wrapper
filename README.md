@@ -77,7 +77,7 @@ Git-Bash installed.
 
     Windows:
 
-    ```ps1
+    ```powershell
     cd your/project
     Invoke-WebRequest https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv -OutFile uv
     Invoke-WebRequest https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv.bat -OutFile uv.bat
@@ -94,7 +94,7 @@ Git-Bash installed.
 
     Windows:
 
-    ```bash
+    ```powershell
     git update-index --chmod=+x ./uv
     ```
 
