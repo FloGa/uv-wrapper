@@ -8,7 +8,7 @@ rem
 rem It can be called like the Bash script: .\uv.bat -V
 
 rem Author: Florian Gamböck <uv-wrapper@mail.floga.de>
-rem Version: 0.2.0-SNAPSHOT
+rem Version: 0.2.0
 rem Repository: https://github.com/FloGa/uv-wrapper
 rem
 rem SPDX-License-Identifier: 0BSD
