@@ -4,7 +4,7 @@
 # upgrade capability.
 #
 # Author: Florian Gamböck <uv-wrapper@mail.floga.de>
-# Version: 0.1.0
+# Version: 0.2.0
 # Repository: https://github.com/FloGa/uv-wrapper
 #
 # SPDX-License-Identifier: 0BSD
@@ -270,6 +270,9 @@ release_install_lock() {
 
 acquire_install_lock() {
   mkdir -p "$UV_PATH"
+
+  # Automatically ignore this directory.
+  echo "*" >"$UV_PATH/.gitignore"
 
   local incomplete_lock_detected=
   while ! create_install_lock; do

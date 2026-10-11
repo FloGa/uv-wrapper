@@ -34,7 +34,10 @@ jobs:
         run: echo "tag_name=$(git describe --tags --abbrev=0)" | tee -a "$GITHUB_OUTPUT"
 
       - name: Create checksums
-        run: sha256sum uv | awk '{print $1}' >uv.sha256
+        run: |
+          for file in uv uv.bat; do
+            sha256sum "$file" | awk '{print $1}' >"$file.sha256"
+          done
 
       - name: Create release notes
         run: |
@@ -49,4 +52,6 @@ jobs:
           files: |
             uv
             uv.sha256
+            uv.bat
+            uv.bat.sha256
           body_path: RELEASE.md
