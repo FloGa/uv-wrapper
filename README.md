@@ -67,6 +67,7 @@ Git-Bash installed.
 1.  Copy or download the wrapper to your project:
 
     Linux/macOS:
+
     ```bash
     cd your/project
     curl -sSL https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv >uv
@@ -75,6 +76,7 @@ Git-Bash installed.
     ```
 
     Windows:
+
     ```ps1
     cd your/project
     Invoke-WebRequest https://raw.githubusercontent.com/FloGa/uv-wrapper/refs/heads/main/uv -OutFile uv
@@ -85,11 +87,13 @@ Git-Bash installed.
 3.  Make sure the wrapper is executable:
 
     Linux/macOS:
+
     ```bash
     chmod +x ./uv
     ```
 
     Windows:
+
     ```bash
     git update-index --chmod=+x ./uv
     ```
