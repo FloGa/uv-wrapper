@@ -84,7 +84,7 @@ Git-Bash installed.
     ```
     
 
-3.  Make sure the wrapper is executable:
+2.  Make sure the wrapper is executable:
 
     Linux/macOS:
 
@@ -98,7 +98,7 @@ Git-Bash installed.
     git update-index --chmod=+x ./uv
     ```
 
-4.  Run `uv` commands through the wrapper:
+3.  Run `uv` commands through the wrapper:
 
     ```bash
     ./uv --version
@@ -118,7 +118,7 @@ Git-Bash installed.
     On first run, the wrapper downloads and verifies the configured `uv` release. If no `.uv-version` file is present,
     the wrapper will download the latest release from GitHub and create a `.uv-version` file with the pinned version.
 
-5.  Check `.uv-version` and `uv` into source control, for example, Git:
+4.  Check `.uv-version` and `uv` into source control, for example, Git:
 
     ```bash
     git add .uv-version uv
